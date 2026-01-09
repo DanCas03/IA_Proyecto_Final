@@ -89,21 +89,31 @@ streamlit run src/app/streamlit_app.py
 
 ```
 proyecto2/
-├── Dataset/               # Archivos Excel con datos
+├── Dataset/                    # Archivos Excel con datos
 ├── src/
+│   ├── config.py              # Configuración centralizada
 │   ├── data/
-│   │   ├── db.py         # Conexión MongoDB
-│   │   └── etl.py        # Pipeline de extracción
+│   │   ├── db.py              # Conexión MongoDB
+│   │   └── etl.py             # Pipeline de extracción
 │   ├── model/
-│   │   ├── preprocessing.py  # Preprocesamiento y balanceo
-│   │   ├── train.py          # Entrenamiento del modelo
-│   │   └── evaluate.py       # Evaluación y métricas
+│   │   ├── preprocessing.py   # Preprocesamiento y balanceo
+│   │   ├── train.py           # Entrenamiento del modelo
+│   │   ├── evaluate.py        # Evaluación y métricas
+│   │   └── inference.py       # Inferencia en tiempo real
 │   └── app/
-│       └── streamlit_app.py  # Interfaz de usuario
-├── models/               # Modelos entrenados
-├── reports/              # Reportes de evaluación
+│       └── streamlit_app.py   # Interfaz de usuario
+├── scripts/                    # Scripts de ejecución paso a paso
+│   ├── 01_test_connection.py
+│   ├── 02_run_etl.py
+│   ├── 03_preprocess.py
+│   ├── 04_train.py
+│   ├── 05_evaluate.py
+│   └── 06_run_app.py
+├── models/                     # Modelos entrenados (ignorado en git)
+├── reports/                    # Reportes de evaluación
+├── notebooks/                  # Notebooks de exploración
 ├── requirements.txt
-├── run_pipeline.py       # Script principal
+├── run_pipeline.py             # Script principal (ejecuta todo)
 └── README.md
 ```
 
