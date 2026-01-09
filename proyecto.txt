@@ -1,0 +1,50 @@
+Especificaciones del Proyecto: Clasificación Semántica de Textos Clásicos mediante Modelos Masivos de Lenguaje
+1. Descripción General y Objetivos
+El objetivo fundamental de este proyecto es el desarrollo, entrenamiento y despliegue de un sistema de Inteligencia Artificial basado en Modelos Masivos de Lenguaje (LLMs). El sistema deberá ser capaz de clasificar fragmentos de textos clásicos en tres categorías temáticas y filosóficas distintivas:
+
+Areté
+
+Poder y Política
+
+Relación entre Humanos y Dioses
+
+El corpus de datos ha sido curado y suministrado en formato de hojas de cálculo por un equipo de investigación en Letras. El producto final deberá no solo demostrar robustez técnica y métrica, sino también ofrecer una interfaz de usuario accesible para expertos en humanidades sin conocimientos técnicos previos en ciencias de la computación.
+
+2. Metodología y Fases de Desarrollo
+2.1. Ingesta y Gestión de Datos
+El estudiante deberá migrar la información contenida en los archivos suministrados (Excel) hacia una estructura de base de datos formal (SQL o NoSQL) diseñada para garantizar la integridad y persistencia de la información. No se admitirá la lectura directa de archivos planos para el entrenamiento final; la interacción debe realizarse a través de consultas a la base de datos construida.
+
+2.2. Preprocesamiento y Balanceo de Clases
+Se espera que el estudiante aplique las técnicas de limpieza, normalización y transformación de texto (NLP) pertinentes para la arquitectura de modelo seleccionada. Dado que la naturaleza de los datasets académicos puede presentar desequilibrios, es un requisito indispensable asegurar la paridad estadística entre las tres categorías antes de iniciar la fase de entrenamiento. El estudiante deberá justificar la estrategia de balanceo seleccionada.
+
+2.3. Modelado y Entrenamiento
+Se deberá implementar una solución basada en Deep Learning, específicamente utilizando técnicas de Fine-Tuning o Transfer Learning sobre arquitecturas de Modelos Masivos de Lenguaje (LLMs) pre-entrenados. El modelo debe ser capaz de discernir los matices semánticos propios de la literatura clásica para asignarlos a una de las tres etiquetas objetivo.
+
+2.4. Evaluación del Desempeño
+La validación del modelo se regirá por métricas estandarizadas de clasificación. Se exige la presentación de:
+
+Una Matriz de Confusión detallada.
+
+Métricas de Precisión, Sensibilidad (Recall) y F1-Score.
+
+Criterio de Aceptación: El modelo debe alcanzar un $F_1 \text{-score} \geq 0.8$ en el conjunto de prueba para considerarse viable.
+
+3. Desarrollo de Interfaz y Experiencia de Usuario (UI/UX)
+Con el modelo entrenado, se deberá construir una aplicación con interfaz gráfica (GUI) orientada al usuario final (investigadores de humanidades).
+
+Accesibilidad: La interfaz debe abstraer la complejidad del modelo subyacente. El usuario ingresará un texto y el sistema deberá devolver la clasificación predicha.
+
+Interpretabilidad: Junto con la etiqueta de la categoría, el sistema debe mostrar el nivel de confianza o probabilidad asociada a dicha predicción (e.g., "Categoría: Areté | Confianza: 94%").
+
+Estética: El diseño visual no es un aspecto secundario. Se evaluará la coherencia estética, la limpieza del diseño y la ergonomía visual de la aplicación.
+
+4. Entregables y Despliegue
+La evaluación final se basará en la entrega de los siguientes elementos:
+
+Repositorio de Código: Enlace a un sistema de control de versiones (ej. GitHub/GitLab) que contenga todo el código fuente, debidamente documentado y organizado.
+
+Producto Final: Se admitirá una de las siguientes dos modalidades de entrega:
+
+Ejecutable de Escritorio: Un archivo instalable o ejecutable standalone que contenga todas las dependencias necesarias para correr en un entorno local.
+
+Despliegue Web: Un enlace funcional a la aplicación desplegada en un servidor web, accesible públicamente para su revisión.

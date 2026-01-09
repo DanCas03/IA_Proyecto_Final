@@ -1,0 +1,149 @@
+# ============================================
+# VARIABLES DE ENTORNO Y CREDENCIALES
+# ============================================
+.env
+.env.local
+.env.*.local
+*.env
+!.env.example
+
+# ============================================
+# PYTHON
+# ============================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+.eggs/
+wheels/
+pip-wheel-metadata/
+
+# ============================================
+# MODELOS Y DATOS (ARCHIVOS GRANDES)
+# ============================================
+# Modelos entrenados (muy pesados para Git)
+models/
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.h5
+*.onnx
+
+# Cache de Hugging Face Transformers
+.cache/
+transformers_cache/
+huggingface/
+
+# Reportes generados (pueden ser regenerados)
+reports/
+*.png
+*.jpg
+*.jpeg
+*.pdf
+
+# Logs de entrenamiento
+logs/
+runs/
+wandb/
+tensorboard/
+mlruns/
+
+# ============================================
+# DATOS
+# ============================================
+# Dataset original (mantener estructura, comentar si quieres subir datos)
+# Dataset/*.xlsx
+# Dataset.zip
+
+# Datos procesados temporales
+data/processed/
+data/temp/
+*.pkl
+*.pickle
+*.joblib
+*.parquet
+
+# ============================================
+# JUPYTER NOTEBOOKS
+# ============================================
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ============================================
+# IDEs Y EDITORES
+# ============================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.code-workspace
+
+# ============================================
+# LOGS Y TEMPORALES
+# ============================================
+*.log
+*.tmp
+*.temp
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ============================================
+# SISTEMA OPERATIVO
+# ============================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# ============================================
+# TESTING Y COVERAGE
+# ============================================
+.coverage
+.pytest_cache/
+htmlcov/
+.tox/
+.nox/
+coverage/
+.nyc_output/
+
+# ============================================
+# OTROS
+# ============================================
+# Archivos grandes diversos
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Excepciones - mantener estos archivos
+!Dataset.zip
