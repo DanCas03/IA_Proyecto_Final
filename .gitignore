@@ -86,6 +86,9 @@ data/temp/
 .ipynb_checkpoints/
 *.ipynb_checkpoints
 
+# Excepciones - notebooks importantes
+!colab_setup.ipynb
+
 # ============================================
 # IDEs Y EDITORES
 # ============================================

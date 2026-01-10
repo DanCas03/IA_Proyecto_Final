@@ -1,9 +1,17 @@
 # Clasificador Semántico de Textos Clásicos
 
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green.svg)](https://www.mongodb.com/cloud/atlas)
+[![Transformers](https://img.shields.io/badge/🤗-Transformers-yellow.svg)](https://huggingface.co/transformers/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-App-red.svg)](https://streamlit.io/)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/TU_USUARIO/proyecto2/blob/main/colab_setup.ipynb)
+
 Sistema de Inteligencia Artificial para clasificar fragmentos de textos clásicos en tres categorías temáticas:
 - **Areté**: Excelencia y virtud moral.
 - **Política y Poder**: Reflexiones sobre gobierno y autoridad.
 - **Relación Dioses-Humanos**: Interacciones entre lo divino y lo mortal.
+
+> 📖 **Quick Start:** [Local](README.md#-fase-1-configuración-inicial) | [Google Colab](QUICKSTART_COLAB.md) | [Guía Completa Colab](GUIA_COLAB.md)
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -52,6 +60,8 @@ Esta guía te llevará a través de todo el proceso, desde la configuración ini
 - ✅ MongoDB Atlas cluster activo
 - ✅ 8GB RAM mínimo
 - ✅ Espacio en disco: ~2GB (modelos + datos)
+
+> 💡 **¿No tienes GPU?** Usa [Google Colab](QUICKSTART_COLAB.md) para entrenar **10-20x más rápido** de forma gratuita.
 
 ## 🚀 Fase 1: Configuración Inicial
 
@@ -330,6 +340,27 @@ Si encuentras problemas:
 
 ¡Éxito con tu proyecto! 🎉
 
+---
+
+## 🚀 Opción Alternativa: Google Colab
+
+Si no tienes una GPU potente, puedes entrenar el modelo en **Google Colab** de forma gratuita.
+
+### Ventajas:
+- ✅ **GPU Tesla T4 gratuita**
+- ✅ **10-20x más rápido** que CPU
+- ✅ **Sin instalación local**
+
+### Cómo usar:
+
+1. Sube el código a GitHub
+2. Abre `colab_setup.ipynb` en [Google Colab](https://colab.research.google.com/)
+3. Sigue las instrucciones del notebook
+
+📖 **Guía completa:** Ver [GUIA_COLAB.md](GUIA_COLAB.md)
+
+---
+
 # Autor
-Daniel Castellanos
+Daniel Castellanos  
 Desarrollado como proyecto académico de IA.
