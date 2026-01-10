@@ -1,10 +1,23 @@
 """
 Script 02: Extracción y carga de datos (ETL).
 Migra los datos de los archivos Excel a MongoDB.
+
+Uso:
+    python scripts/02_run_etl.py          # Normal
+    python scripts/02_run_etl.py --debug  # Con información de debugging
 """
 
 import sys
+import os
 from pathlib import Path
+
+# Configurar UTF-8 para Windows
+if sys.platform == "win32":
+    os.environ["PYTHONIOENCODING"] = "utf-8"
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8")
 
 # Agregar el directorio raíz al path
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -12,8 +25,13 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from src.data.etl import run_etl_pipeline
 
 def main():
+    # Verificar si se pasó el flag de debug
+    debug = "--debug" in sys.argv
+    
     print("=" * 60)
     print("📊 EXTRACCIÓN Y CARGA DE DATOS (ETL)")
+    if debug:
+        print("   [MODO DEBUG ACTIVADO]")
     print("=" * 60)
     
     # Verificar que existe el directorio Dataset
@@ -24,7 +42,7 @@ def main():
         sys.exit(1)
     
     # Contar archivos
-    excel_files = list(dataset_path.glob("*.xlsx"))
+    excel_files = sorted(list(dataset_path.glob("*.xlsx")))
     print(f"\n📁 Archivos Excel encontrados: {len(excel_files)}")
     for f in excel_files:
         print(f"   • {f.name}")
@@ -36,7 +54,7 @@ def main():
     # Ejecutar ETL
     print("\n🚀 Iniciando proceso de extracción...")
     try:
-        stats = run_etl_pipeline(dataset_path=str(dataset_path), clear_existing=True)
+        stats = run_etl_pipeline(dataset_path=str(dataset_path), clear_existing=True, debug=debug)
         
         print("\n" + "=" * 60)
         print("✅ ETL COMPLETADO EXITOSAMENTE")

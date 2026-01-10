@@ -126,6 +126,34 @@ proyecto2/
 - **Streamlit**: Interfaz de usuario
 - **scikit-learn**: Métricas y evaluación
 
+## Características del Sistema ETL
+
+### 🔍 Detección Inteligente de Datos
+
+El sistema ETL implementa estrategias avanzadas para manejar la heterogeneidad de los datos:
+
+1. **Detección Difusa de Categorías**: 
+   - Maneja variaciones: "Areté", "arete", "etiqueta areté"
+   - Soporta abreviaciones: "H. y D." → "Humanos y Dioses"
+   - Normaliza automáticamente acentos y espacios
+
+2. **Detección de Múltiples Formatos**:
+   - **Formato Normal**: Una categoría por hoja (mayoría de archivos)
+   - **Formato Multi-Tabla**: Múltiples categorías en paralelo (archivo 4.xlsx)
+
+3. **Búsqueda Inteligente de Encabezados**:
+   - Escanea hasta 20 filas para encontrar headers
+   - Maneja tablas que no empiezan en A1
+   - Detecta columnas: "Canto", "Versos", "Cita" con fuzzy matching
+
+### 📊 Resultados de Extracción
+
+- **123 documentos** extraídos de 7 archivos Excel
+- Distribución balanceada:
+  - Areté: 42 registros (34%)
+  - Política y Poder: 38 registros (31%)
+  - Relación Dioses-Humanos: 43 registros (35%)
+
 ## Métricas
 
 El modelo debe alcanzar un **F1-Score ≥ 0.80** en el conjunto de prueba para considerarse viable.
@@ -155,21 +183,6 @@ git status
    - `reports/` (pueden regenerarse)
    - `__pycache__/` (archivos compilados de Python)
 
-### Comandos básicos:
-
-```bash
-# Ver estado
-git status
-
-# Añadir archivos
-git add .
-
-# Commit
-git commit -m "Implementación inicial del clasificador"
-
-# Subir a GitHub
-git push origin main
-```
 
 ## Notas Importantes
 
