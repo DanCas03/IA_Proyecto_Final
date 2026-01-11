@@ -22,25 +22,69 @@ LABEL_NAMES = {v: k for k, v in LABEL_MAP.items()}
 
 def clean_text(text: str) -> str:
     """
-    Limpia y normaliza el texto para el modelo.
+    Limpia y normaliza el texto de forma exhaustiva para mejorar el entrenamiento.
     
     Args:
         text: Texto crudo
     
     Returns:
-        Texto limpio
+        Texto limpio y normalizado
     """
     if not isinstance(text, str):
         return ""
     
-    # Eliminar espacios múltiples
+    # Convertir a string si es necesario y asegurar codificación correcta
+    text = str(text).encode('utf-8', errors='ignore').decode('utf-8')
+    
+    # Eliminar caracteres de control y caracteres no imprimibles
+    text = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]', '', text)
+    
+    # Eliminar URLs (si existen)
+    text = re.sub(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', '', text)
+    
+    # Eliminar emails (si existen)
+    text = re.sub(r'\S+@\S+\.\S+', '', text)
+    
+    # Normalizar comillas: convertir comillas tipográficas a comillas simples/dobles estándar
+    text = re.sub(r'[""«»„‚]', '"', text)  # Comillas dobles tipográficas
+    text = re.sub(r'[''´`]', "'", text)    # Comillas simples tipográficas
+    
+    # Normalizar guiones: convertir guiones largos a guiones cortos
+    text = re.sub(r'[—–]', '-', text)
+    
+    # Normalizar espacios: eliminar espacios múltiples, tabs, saltos de línea múltiples
+    text = re.sub(r'[ \t]+', ' ', text)      # Múltiples espacios/tabs a uno
+    text = re.sub(r'\n\s*\n+', '\n', text)   # Múltiples saltos de línea a uno
+    text = re.sub(r'[ \t]*\n[ \t]*', ' ', text)  # Saltos de línea a espacios
+    
+    # Eliminar espacios al inicio y final de puntuación
+    text = re.sub(r'\s+([,.!?;:])', r'\1', text)  # Espacios antes de puntuación
+    text = re.sub(r'([,.!?;:])\s+', r'\1 ', text)  # Espacios después de puntuación (normalizar)
+    
+    # Eliminar puntos múltiples (pero mantener puntos suspensivos como uno solo)
+    text = re.sub(r'\.{3,}', '...', text)
+    
+    # Eliminar espacios múltiples finales
     text = re.sub(r'\s+', ' ', text)
     
-    # Eliminar caracteres de control
-    text = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', text)
+    # Eliminar caracteres no ASCII problemáticos pero mantener acentos y caracteres especiales del español
+    # Permitir letras, números, puntuación básica, acentos, ñ, caracteres latinos
+    # text = re.sub(r'[^\w\s.,!?;:()\-"\'áéíóúÁÉÍÓÚñÑüÜ]', '', text)  # Comentado: puede ser muy agresivo
     
-    # Trim
+    # Eliminar caracteres Unicode problemáticos pero mantener el español y latín
+    # Mantener: letras (incluyendo acentos), números, espacios, puntuación común
+    # Permitir caracteres latinos básicos y acentos comunes
+    text = re.sub(r'[^\w\s.,!?;:()\[\]{}"\'\-áéíóúÁÉÍÓÚñÑüÜàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛçÇ]', '', text)
+    
+    # Normalizar espacios nuevamente después de eliminar caracteres
+    text = re.sub(r'\s+', ' ', text)
+    
+    # Eliminar espacios al inicio y final
     text = text.strip()
+    
+    # Eliminar textos que son solo puntuación o espacios
+    if not text or text.strip() == '' or re.match(r'^[^\w]+$', text):
+        return ""
     
     return text
 
@@ -165,12 +209,36 @@ def preprocess_and_balance(
     
     # Limpiar textos
     print("\n🧹 Limpiando textos...")
-    for doc in documents:
-        doc["texto_limpio"] = clean_text(doc["texto"])
+    cleaned_count = 0
+    removed_count = 0
     
-    # Filtrar documentos sin texto válido
-    documents = [d for d in documents if len(d["texto_limpio"]) > 10]
+    for doc in documents:
+        original_text = doc.get("texto", "")
+        cleaned_text = clean_text(original_text)
+        doc["texto_limpio"] = cleaned_text
+        
+        if cleaned_text:
+            cleaned_count += 1
+        else:
+            removed_count += 1
+    
+    # Filtrar documentos sin texto válido (más estricto: mínimo 20 caracteres)
+    initial_count = len(documents)
+    documents = [d for d in documents if len(d.get("texto_limpio", "")) >= 20]
+    removed_short = initial_count - len(documents)
+    
+    print(f"   Textos limpiados: {cleaned_count}")
+    print(f"   Textos vacíos eliminados: {removed_count}")
+    print(f"   Textos muy cortos eliminados (<20 chars): {removed_short}")
     print(f"   Documentos válidos después de limpieza: {len(documents)}")
+    
+    # Estadísticas adicionales de limpieza
+    if documents:
+        avg_length = sum(len(d.get("texto_limpio", "")) for d in documents) / len(documents)
+        min_length = min(len(d.get("texto_limpio", "")) for d in documents)
+        max_length = max(len(d.get("texto_limpio", "")) for d in documents)
+        print(f"   Longitud promedio: {avg_length:.1f} caracteres")
+        print(f"   Longitud mínima: {min_length}, máxima: {max_length}")
     
     # Balancear
     print(f"\n⚖️ Aplicando estrategia de balanceo: {balance_strategy}")
