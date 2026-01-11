@@ -5,6 +5,7 @@ Interfaz de usuario para investigadores de humanidades.
 
 import streamlit as st
 from pathlib import Path
+import sys
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch.nn.functional as F
@@ -166,7 +167,16 @@ CATEGORY_INFO = {
     }
 }
 
-MODEL_PATH = Path("models/clasificador_textos/final")
+def _get_base_dir() -> Path:
+    """Base dir del proyecto (normal) o del bundle (PyInstaller)."""
+    meipass = getattr(sys, "_MEIPASS", None)
+    if getattr(sys, "frozen", False) and meipass:
+        return Path(meipass)
+    return Path(__file__).resolve().parents[3]
+
+
+BASE_DIR = _get_base_dir()
+MODEL_PATH = BASE_DIR / "models" / "clasificador_textos" / "final"
 
 
 @st.cache_resource
